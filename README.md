@@ -1,3 +1,3 @@
 #  Repositorio Restapi-Flask
-  // Repositorio voltado aos treinamento as praticas Devops
+  // Repositorio voltado ao treinamento sobre as praticas Devops
 
