@@ -5,7 +5,7 @@ from flask_mongoengine import MongoEngine
 # Inicializa o aplicativo Flask
 app = Flask(__name__)
 
-# Configuração de conexão com o MongoDB (serviço 'mongodb' definido no docker-compose)
+# Configuração de conexão com o MongoDB
 app.config['MONGODB_SETTINGS'] = {
     'db': 'users', 
     'port': 27017,
@@ -14,7 +14,7 @@ app.config['MONGODB_SETTINGS'] = {
     'password': 'admin' # Senha definida no docker-compose.yml
 }
 
-# Inicializa o MongoEngine com as configurações do app
+# Inicializa o MongoEngine 
 db = MongoEngine(app) 
 
 # Inicializa o RequestParser para lidar com dados de entrada (JSON ou formulário)
