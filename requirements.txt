@@ -1,0 +1,4 @@
+flask==2.2.5
+flask-restful==0.3.10
+flask-mongoengine==1.0.0
+gunicorn

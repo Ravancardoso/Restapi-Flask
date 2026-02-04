@@ -1,20 +1,31 @@
-# Use the official Python base image (slim version recommended for smaller size)
-FROM python:3.10-slim
+# 1️⃣ Lightweight and official Python base image
+FROM python:3.10-alpine
 
-# Set the working directory inside the container
-WORKDIR /usr/src/app
+# 2️⃣ Environment variables for better Python behavior
+# - Prevents Python from writing .pyc files
+# - Ensures logs are sent directly to stdout/stderr
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# Copy the requirements file and install dependencies first to optimize build cache
-# This ensures the dependency layer is only rebuilt if requirements.txt changes
+# 3️⃣ System dependencies (only required if Python packages need compilation)
+RUN apk add --no-cache gcc musl-dev linux-headers
+
+# 4️⃣ Set working directory inside the container
+WORKDIR /app
+
+# 5️⃣ Install application dependencies first to leverage Docker layer caching
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code to the working directory
-COPY api_corrected.py .
+# 6️⃣ Copy application source code
+COPY api.py .
 
-# Port 5000 is the port Flask is listening on (and will be mapped by docker-compose)
+# 7️⃣ Create and switch to a non-root user for security
+RUN addgroup -S app && adduser -S app -G app
+USER app
+
+# 8️⃣ Expose application port (documentation purpose)
 EXPOSE 5000
 
-# Command to execute the application when the container starts
-# We use Python to start the script
-CMD ["python", "api_corrected.py"]
+# 9️⃣ Define the main process
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "api:app"]
