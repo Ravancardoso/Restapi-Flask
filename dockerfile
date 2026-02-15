@@ -1,6 +1,10 @@
 # 1️⃣ Lightweight and official Python base image
 FROM python:3.10-alpine
 
+
+HEALTHCHECK --interval=10s --timeout=3s \
+  CMD curl -sf http://localhos:5000/health || exit 1
+
 # 2️⃣ Environment variables for better Python behavior
 # - Prevents Python from writing .pyc files
 # - Ensures logs are sent directly to stdout/stderr

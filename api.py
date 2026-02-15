@@ -17,7 +17,7 @@ api = Api(app)
 
 class Health(Resource):
     def get(self):
-        return {"status": "ok"}
+        return {"status": "minha-api-ok"}
 
 api.add_resource(Health, '/health')
 
